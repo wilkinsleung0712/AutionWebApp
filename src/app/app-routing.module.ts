@@ -1,10 +1,15 @@
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { MainAppComponent } from './main-app/main-app.component';
 
 const routes: Routes = [
   {
     path: '',
-    children: []
+    component:MainAppComponent
+  },
+  {
+    path:'product/:prodTitle', component:ProductDetailComponent
   }
 ];
 
