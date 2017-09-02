@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Product, Comment } from '../model/product';
+import { Product, Comment } from '../model/model';
 
 @Injectable()
 export class ProductService {
@@ -24,5 +24,13 @@ export class ProductService {
 
     getComments(){
         return this.comments;
+    }
+
+    getProduct(productId:number):Product{
+        return this.products.find(product=>product.id === +productId);
+    }
+
+    getProductComments(productId:number):Comment[] {
+        return this.comments.filter(comment=>comment.productId === +productId);
     }
 }

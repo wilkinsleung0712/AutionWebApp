@@ -9,8 +9,8 @@ const routes: Routes = [
     component:MainAppComponent
   },
   {
-    path:'product/:prodTitle', component:ProductDetailComponent
-  }
+    path:'product/:prodId', component:ProductDetailComponent
+  },
 ];
 
 @NgModule({
