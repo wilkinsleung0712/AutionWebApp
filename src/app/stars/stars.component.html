@@ -5,6 +5,6 @@
 </div> -->
 
 <p>
-  <span *ngFor="let star of stars" class="glyphicon glyphicon-star" [class.glyphicon-star-empty]="star"></span>
-  <span>{{rating}} stars</span>
+  <span *ngFor="let star of stars; let i = index" class="glyphicon glyphicon-star" [class.glyphicon-star-empty]="star" (click)="onStarRating(i)"></span>
+  <span>{{rating | number:'1.0-2'}} stars</span>
 </p>
