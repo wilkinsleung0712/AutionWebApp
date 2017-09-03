@@ -1,21 +1,21 @@
-<form name="searchForm" role="form">
-  <div class="form-group">
+<form [formGroup]="formModel" (ngSubmit)="onSubmit()">
+  <div class="form-group" [class.has-error]="formModel.hasError('minlength','title')">
     <label for="productTitle">Product Title</label>
-    <input id="productTitle" type="text" class="form-control">
+    <input formControlName="title" id="productTitle" type="text" class="form-control">
+    <span class="help-block" [class.hidden]="!formModel.hasError('minlength','title')">Product ID has to be larger than length of 3</span>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" [class.has-error]="formModel.hasError('positiveNumber','price')">
     <label for="productPrice">Product Price</label>
-    <input id="productPrice" type="text" class="form-control" placeholder="Product Price">
+    <input formControlName="price" id="productPrice" type="text" class="form-control" placeholder="Product Price">
+    <span class="help-block" [class.hidden]="!formModel.hasError('positiveNumber','price')">Product Price should not be less or equal than 0</span>
   </div>
 
   <div class="form-group">
     <label for="productCategory">Product Category</label>
-    <select id="productCategory" class="form-control">
-        <option selected></option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+    <select formControlName="category" id="productCategory" class="form-control">
+        <option selected>All Category</option>
+        <option *ngFor="let cat of categorys;let i=index" [value]="cat">{{cat}}</option>
     </select>
   </div>
 

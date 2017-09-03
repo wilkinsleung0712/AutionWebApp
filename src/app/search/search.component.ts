@@ -1,4 +1,6 @@
+import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../shared/product.service';
 
 @Component({
   selector: 'app-search',
@@ -7,9 +9,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  formModel: FormGroup;
+  categorys:string[];
+
+  constructor(
+    private productService: ProductService,
+    private fb: FormBuilder) {
+      // we creating form builder data model
+    this.formModel = this.fb.group({
+      title: [null, Validators.minLength(3)],
+      price: [null, this.positiveNumberValidator],
+      category: ['-1']
+    });
+
+    // we populate our category
+    this.categorys = this.productService.getCategory();
+  }
 
   ngOnInit() {
   }
 
+  positiveNumberValidator(control: FormControl): any {
+    console.log('postivie number validator: ' + control.value);
+    if (!control.value) {
+      return null;
+    }
+
+    if (parseInt(control.value) > 0) {
+      return null;
+    } else {
+      return { positiveNumber: true };
+    }
+  }
+
+  onSubmit() {
+    console.log(this.formModel);
+  }
 }

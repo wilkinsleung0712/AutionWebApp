@@ -18,19 +18,25 @@ export class ProductService {
         new Comment(4, 1, '2017-02-02 22:22:22', 'Bob', 3, 'things good!'),
     ]
 
-    getProducts(){
+    private categorys: string[] = ['Phone', 'Computer', 'Book'];
+
+    getCategory(): string[] {
+        return this.categorys;
+    }
+
+    getProducts(): Product[] {
         return this.products;
     }
 
-    getComments(){
+    getComments(): Comment[] {
         return this.comments;
     }
 
-    getProduct(productId:number):Product{
-        return this.products.find(product=>product.id === +productId);
+    getProduct(productId: number): Product {
+        return this.products.find(product => product.id === +productId);
     }
 
-    getProductComments(productId:number):Comment[] {
-        return this.comments.filter(comment=>comment.productId === +productId);
+    getProductComments(productId: number): Comment[] {
+        return this.comments.filter(comment => comment.productId === +productId);
     }
 }
