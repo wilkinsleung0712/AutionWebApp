@@ -14,7 +14,7 @@ export class FilterPipe implements PipeTransform {
       // get field value from each item
       let fieldValue = item[filterField];
       // if the field value is include any keyword
-      return fieldValue.indexOf(keyword) >= 0;
+      return fieldValue.indexOf(keyword.toLowerCase()) >= 0 || fieldValue.indexOf(keyword.toUpperCase()) >= 0 || fieldValue.indexOf(keyword)>=0;
     });
   }
 
