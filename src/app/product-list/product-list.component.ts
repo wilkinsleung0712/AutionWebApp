@@ -27,6 +27,9 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = this.productService.getProducts();
+    // subscribe this event emitter event to check if we need to search
+    this.productService.productSearchEventEmitter.subscribe(
+      params => this.products$ = this.productService.search(params));
   }
 
 }

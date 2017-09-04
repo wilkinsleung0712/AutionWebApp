@@ -11,23 +11,24 @@ import { Observable } from 'rxjs/Rx';
 export class SearchComponent implements OnInit {
 
   formModel: FormGroup;
-  categories$:Observable<string[]>;
+  categories$: Observable<string[]>;
 
   constructor(
     private productService: ProductService,
     private fb: FormBuilder) {
-      // we creating form builder data model
+    // we creating form builder data model
     this.formModel = this.fb.group({
       title: [null, Validators.minLength(3)],
       price: [null, this.positiveNumberValidator],
       category: ['-1']
     });
 
-    // we populate our category
-    this.categories$ = this.productService.getCategory();
+    
   }
 
   ngOnInit() {
+    // we populate our category
+    this.categories$ = this.productService.getCategory();
   }
 
   positiveNumberValidator(control: FormControl): any {
@@ -44,6 +45,9 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formModel);
+    if (this.formModel.valid) {
+      console.log(this.formModel);
+      this.productService.productSearchEventEmitter.emit(this.formModel.value);
+    }
   }
 }
