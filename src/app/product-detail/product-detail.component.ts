@@ -22,10 +22,9 @@ export class ProductDetailComponent implements OnInit {
     // we can get productId form our routeInfo
     let productId: number = this.routeInfo.snapshot.params['prodId'];
     // then we get the product
-    this.product = this.productService.getProduct(productId);
-    this.comments = this.productService.getProductComments(productId);
+    this.productService.getProduct(productId).subscribe(product => this.product = product);
+    this.productService.getProductComments(productId).subscribe(comments => this.comments = comments);
 
-    console.log(this.product);
   }
 
   addComment() {

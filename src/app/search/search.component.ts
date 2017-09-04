@@ -1,6 +1,7 @@
 import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../shared/product.service';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-search',
@@ -10,7 +11,7 @@ import { ProductService } from '../shared/product.service';
 export class SearchComponent implements OnInit {
 
   formModel: FormGroup;
-  categorys:string[];
+  categories$:Observable<string[]>;
 
   constructor(
     private productService: ProductService,
@@ -23,7 +24,7 @@ export class SearchComponent implements OnInit {
     });
 
     // we populate our category
-    this.categorys = this.productService.getCategory();
+    this.categories$ = this.productService.getCategory();
   }
 
   ngOnInit() {

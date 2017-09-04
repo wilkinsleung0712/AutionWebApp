@@ -3,6 +3,7 @@ import { Product } from '../model/model';
 import { ProductService } from '../shared/product.service';
 import { FormControl } from "@angular/forms";
 import 'rxjs/Rx'
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +12,7 @@ import 'rxjs/Rx'
 })
 export class ProductListComponent implements OnInit {
 
-  private products: Array<Product>;
+  products$: Observable<Product[]>;
   imageUrl: string = 'http://placehold.it/320x150';
 
   private keyword: string;
@@ -25,7 +26,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
+    this.products$ = this.productService.getProducts();
   }
 
 }

@@ -15,7 +15,9 @@
     <label for="productCategory">Product Category</label>
     <select formControlName="category" id="productCategory" class="form-control">
         <option selected>All Category</option>
-        <option *ngFor="let cat of categorys;let i=index" [value]="cat">{{cat}}</option>
+        <div *ngIf="categories$ | async as categories">
+          <option *ngFor="let cat of categories;let i=index" [value]="cat">{{cat}}</option>
+        </div>
     </select>
   </div>
 

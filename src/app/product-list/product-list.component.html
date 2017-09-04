@@ -5,7 +5,8 @@
     </div>
   </div>
 </div>
-<div *ngFor="let product of products | filter:'title':keyword" class="col-md-4 col-sm-4 col-lg-4">
+
+<div *ngFor="let product of products$ | async | filter:'title':keyword" class="col-md-4 col-sm-4 col-lg-4">
   <div class="thumbnail">
     <img [src]="imageUrl">
     <div class="caption">
