@@ -15,8 +15,8 @@ export class ProductListComponent implements OnInit {
   products$: Observable<Product[]>;
   imageUrl: string = 'http://placehold.it/320x150';
 
-  private keyword: string;
-  private titleFilter: FormControl = new FormControl();
+  keyword: string;
+  titleFilter: FormControl = new FormControl();
 
   constructor(private productService: ProductService) {
     this.titleFilter.valueChanges.debounceTime(500)
