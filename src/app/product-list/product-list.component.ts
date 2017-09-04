@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../model/model';
 import { ProductService } from '../shared/product.service';
-import { FormControl } from "@angular/forms";
-import 'rxjs/Rx'
+import { FormControl } from '@angular/forms';
+import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Rx';
 export class ProductListComponent implements OnInit {
 
   products$: Observable<Product[]>;
-  imageUrl: string = 'http://placehold.it/320x150';
+  imageUrl = 'http://placehold.it/320x150';
 
   keyword: string;
   titleFilter: FormControl = new FormControl();
