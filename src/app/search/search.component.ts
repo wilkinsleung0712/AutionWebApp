@@ -22,8 +22,6 @@ export class SearchComponent implements OnInit {
       price: [null, this.positiveNumberValidator],
       category: ['-1']
     });
-
-    
   }
 
   ngOnInit() {

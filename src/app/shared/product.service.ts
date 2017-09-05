@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Product, Comment } from '../model/model';
-import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Rx";
+import { Http, Response, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
 
 @Injectable()

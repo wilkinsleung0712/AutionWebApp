@@ -49,7 +49,7 @@ server.get('/', (req, res) => {
 server.get('/api/products', (req, res) => {
   let result = products;
   let params = req.query;
-  
+
   console.log(params);
   if (params.title) {
     result = result.filter(p => p.title.indexOf(params.title) !== -1);
@@ -59,7 +59,7 @@ server.get('/api/products', (req, res) => {
     result = result.filter(p => p.price <= params.price);
   }
 
-  if (params.category && result.length > 0) {
+  if (params.category && result.length > 0 && params.category !== '-1') {
     result = result.filter(p => p.category.indexOf(params.category) !== -1);
   }
   res.json(result);
