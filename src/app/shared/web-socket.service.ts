@@ -20,7 +20,6 @@ export class WebSocketService {
           this.ws.onclose = () => observer.complete();
           this.ws.onopen = () => this.sendMessage({ productId: pid });
           return () => this.ws.close();
-        
       }
 
     ).map(message => JSON.parse(message));

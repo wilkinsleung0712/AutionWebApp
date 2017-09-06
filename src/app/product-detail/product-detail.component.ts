@@ -72,6 +72,7 @@ export class ProductDetailComponent implements OnInit {
         this.product.id
       ).subscribe(
         products => {
+          // the products model will be the same as we get from the auction_server
           let product = products.find(product => product.productId === this.product.id);
           this.currentBid = product.newBid;
         }

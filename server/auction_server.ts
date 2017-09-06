@@ -31,21 +31,21 @@ const products: Product[] = [
   new Product(3, 'M7', 450, 4.5, 'design by xiaomi', ['phone']),
   new Product(4, 'S8', 650, 2, 'design by sony', ['phone']),
   new Product(5, 'Iphone7 Plus', 1120, 1, 'design by apple', ['phone'])
-]
+];
 
 const comments: Comment[] = [
   new Comment(1, 1, '2017-02-02 22:22:22', 'Jay', 3, 'things good!'),
   new Comment(2, 1, '2017-02-02 22:22:22', 'Ken', 3, 'things good!'),
   new Comment(3, 1, '2017-02-02 22:22:22', 'Allen', 3, 'things good!'),
   new Comment(4, 1, '2017-02-02 22:22:22', 'Bob', 3, 'things good!'),
-]
+];
 
 const categorys: string[] = ['Phone', 'Computer', 'Book'];
 
 const server = express();
 
 server.get('/', (req, res) => {
-  res.send('GET request to the homepage')
+  res.send('GET request to the homepage');
 });
 
 server.get('/api/products', (req, res) => {
@@ -69,11 +69,11 @@ server.get('/api/products', (req, res) => {
 });
 
 server.get('/api/product/:id', (req, res) => {
-  res.json(products.find(product => product.id == +req.params.id));
+  res.json(products.find(product => product.id === +req.params.id));
 });
 
 server.get('/api/product/:id/comments', (req, res) => {
-  res.json(comments.filter(comment => comment.productId == +req.params.id));
+  res.json(comments.filter(comment => comment.productId === +req.params.id));
 });
 
 server.get('/api/categories', (req, res) => {
@@ -85,7 +85,9 @@ server.listen(8085, () => {
 });
 
 const ws = new Server({ port: 8089 });
-const subscriptions = new Map<any, number[]>();
+// subscriptionsDataMap is map where the client connection is the key
+// and the list of interested products ids
+const subscriptionsDataMap = new Map<any, number[]>();
 
 ws.on('connection', (client) => {
   console.log('this is connected');
@@ -93,9 +95,9 @@ ws.on('connection', (client) => {
     // change our string to javascript object
     let productObj = JSON.parse(message);
     // let us get the list of productIds that subscribe by this client
-    let productIds = subscriptions.get(client) || [];
+    let productIds = subscriptionsDataMap.get(client) || [];
     // add the new id to our productIds via the client
-    subscriptions.set(client, [...productIds, productObj.productId]);
+    subscriptionsDataMap.set(client, [...productIds, productObj.productId]);
     console.log(message);
   });
 });
@@ -117,9 +119,9 @@ setInterval(() => {
   });
 
   // we going to send to our observer
-  subscriptions.forEach((productIds: number[], clientWs: WebSocket) => {
-    // we convert each productid to our object so we only use map operator, we should not use foreach in here.
+  subscriptionsDataMap.forEach((productIds: number[], clientWs: WebSocket) => {
     if (clientWs.readyState === 1) {
+       // we convert each productid to our object so we only use map operator, we should not use foreach in here.
       let newBids = productIds.map(id => ({
         productId: id,
         newBid: currentBids.get(id)
@@ -127,7 +129,7 @@ setInterval(() => {
       console.log(newBids);
       clientWs.send(JSON.stringify(newBids));
     } else {
-      subscriptions.delete(clientWs);
+      subscriptionsDataMap.delete(clientWs);
     }
 
   });
