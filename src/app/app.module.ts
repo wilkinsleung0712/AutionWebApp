@@ -15,6 +15,7 @@ import { StarsComponent } from './stars/stars.component';
 import { ProductService } from './shared/product.service';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { FilterPipe } from './pipe/filter.pipe';
+import { WebSocketService } from './shared/web-socket.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FilterPipe } from './pipe/filter.pipe';
     ReactiveFormsModule
   ],
   providers: [
-    ProductService
+    ProductService,
+    WebSocketService
   ],
   bootstrap: [AppComponent]
 })

@@ -11,13 +11,17 @@
       <app-stars [rating]="product?.rating" [disableSelectStar]="true"></app-stars>
     </p>
   </div>
+  <div>
+    <button class="btn btn-default btn-lg" [class.active]="watched" (click)="isWatched()">{{!watched?'Watch':'Unwatch'}}</button>
+    <label>The biding price is now at: ${{currentBid}}</label>
+  </div>
 </div>
 <!-- show list of comment -->
-<div class="well" *ngIf="comments.length != 0">
+<div class="well" *ngIf="comments?.length">
   <div class="row" *ngIf="isCommentHidden" class="comment-row">
-      <button class="btn btn-primary" (click)="isCommentHidden = !isCommentHidden">Add Comment</button>
+    <button class="btn btn-primary" (click)="isCommentHidden = !isCommentHidden">Add Comment</button>
   </div>
-   
+
   <div class="row" *ngIf="!isCommentHidden" class="comment-row">
     <app-stars [(rating)]="newRating" [disableSelectStar]="false"></app-stars>
     <div class="form-group">
