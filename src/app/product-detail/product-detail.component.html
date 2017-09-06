@@ -12,8 +12,8 @@
     </p>
   </div>
   <div>
-    <button class="btn btn-default btn-lg" [class.active]="watched" (click)="isWatched()">{{!watched?'Watch':'Unwatch'}}</button>
-    <label>The biding price is now at: ${{currentBid}}</label>
+    <button class="btn btn-default btn-lg" [class.active]="isWatched" (click)="watchProduct()">{{isWatched?'Unwatch':'Watch'}}</button>
+    <label>The biding price is now at: ${{currentBid | number:'.0-2'}}</label>
   </div>
 </div>
 <!-- show list of comment -->

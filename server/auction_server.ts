@@ -89,13 +89,14 @@ const subscriptions = new Map<any, number[]>();
 
 ws.on('connection', (client) => {
   console.log('this is connected');
-  client.on('message', (websocket: string) => {
-    let productObj = JSON.parse(websocket);
+  client.on('message', (message: string) => {
+    // change our string to javascript object
+    let productObj = JSON.parse(message);
     // let us get the list of productIds that subscribe by this client
     let productIds = subscriptions.get(client) || [];
     // add the new id to our productIds via the client
     subscriptions.set(client, [...productIds, productObj.productId]);
-    console.log(websocket);
+    console.log(message);
   });
 });
 
@@ -111,19 +112,23 @@ setInterval(() => {
   products.forEach(p => {
     // get the currentBid for this product in our currentBids Map
     let currentBid = currentBids.get(p.id) || p.price;
-    let newBid = currentBid * Math.random() * 5;
+    let newBid = currentBid + Math.random() * 5;
     currentBids.set(p.id, newBid);
   });
 
   // we going to send to our observer
-  subscriptions.forEach((productIds, clientWs: WebSocket) => {
-    let newBids = productIds.forEach(p => {
-      return {
-        productId: p,
-        currentBid: currentBids.get(p)
-      };
-    });
-    console.log(newBids);
-    clientWs.send(newBids);
+  subscriptions.forEach((productIds: number[], clientWs: WebSocket) => {
+    // we convert each productid to our object so we only use map operator, we should not use foreach in here.
+    if (clientWs.readyState === 1) {
+      let newBids = productIds.map(id => ({
+        productId: id,
+        newBid: currentBids.get(id)
+      }));
+      console.log(newBids);
+      clientWs.send(JSON.stringify(newBids));
+    } else {
+      subscriptions.delete(clientWs);
+    }
+
   });
 }, 2000);
