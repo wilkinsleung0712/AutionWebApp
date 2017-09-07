@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Server } from 'ws';
+import * as path from 'path';
 import 'rxjs/Rx';
 
 // our data structure for server side
@@ -43,10 +44,10 @@ const comments: Comment[] = [
 const categorys: string[] = ['Phone', 'Computer', 'Book'];
 
 const server = express();
-
-server.get('/', (req, res) => {
-  res.send('GET request to the homepage');
-});
+server.use(express.static(path.join(__dirname, '..', '/client/dist')));
+// server.get('/', (req, res) => {
+//   res.send('GET request to the homepage');
+// });
 
 server.get('/api/products', (req, res) => {
   let result = products;
@@ -121,7 +122,7 @@ setInterval(() => {
   // we going to send to our observer
   subscriptionsDataMap.forEach((productIds: number[], clientWs: WebSocket) => {
     if (clientWs.readyState === 1) {
-       // we convert each productid to our object so we only use map operator, we should not use foreach in here.
+      // we convert each productid to our object so we only use map operator, we should not use foreach in here.
       let newBids = productIds.map(id => ({
         productId: id,
         newBid: currentBids.get(id)
@@ -134,3 +135,11 @@ setInterval(() => {
 
   });
 }, 2000);
+
+
+// const client = express();
+// client.use(express.static(path.join(__dirname, '..', '/client')));
+// client.listen(8000, () => {
+//   console.log('express client starting in http://localhost:8000');
+// });
+// ;
